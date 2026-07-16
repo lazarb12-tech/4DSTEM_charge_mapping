@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "Quantitative 4D-STEM projected charge-density mapping"
+abstract: "Analysis and simulation code for mapping projected charge density at metal-support interfaces by robust, calibrated 4D-STEM."
+type: software
+authors:
+  - given-names: Lazar
+    family-names: Bijelić
+    # orcid: "https://orcid.org/0009-0007-7474-3236"
+    affiliation: "University of Nova Gorica; National Institute of Chemistry, Ljubljana"
+  - given-names: Nejc
+    family-names: Hodnik
+    # orcid: "https://orcid.org/0000-0002-7113-9769"
+    affiliation: "National Institute of Chemistry, Ljubljana"
+  - given-names: Francisco
+    family-names: Ruiz-Zepeda
+    # orcid: "https://orcid.org/0000-0002-2637-3433"
+    affiliation: "National Institute of Chemistry, Ljubljana"
+license: MIT
+repository-code: "https://github.com/lazarb12-tech/4DSTEM_charge_mapping"
+version: "1.0.0"
+date-released: "2026-07-16"
