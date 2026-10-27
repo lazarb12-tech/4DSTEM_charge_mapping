@@ -11,5 +11,5 @@ joblib
 # 4D-STEM / electron microscopy
 py4DSTEM          # reading .h5 data cubes, calibration
 hyperspy          # reading .mib files (MIBtoH5_wpixsz.py only)
-ase               # atomic models (centre-fitting + simulation)
-abtem             # multislice simulation (abtem_simulation_Pt_graphene.py only)
+
+# The scripts in paper_reproduction/ have their own list (paper_reproduction/requirements.txt).

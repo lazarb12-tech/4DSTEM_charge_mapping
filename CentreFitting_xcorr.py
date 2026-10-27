@@ -33,6 +33,7 @@ VAC_REF_SIZE           = 2 # half-size of square reference region in "vacuum mod
 PLANE_SUBTRACT         = True   # set to True to perform plane subtraction
 PLANE_MODE             = "apply"  # "measure" to fit and save plane coefficients from current data; "apply" to load and apply previously saved coefficients
 USE_ARCSIN_CORRECTION  = True # True = exact arcsin chain rule; False = small angle approx
+UPSAMPLE               = 20      # sub-pixel upsampling of the cross-correlation (20 -> 0.05 px sampling)
 
 SKIP_FITTING          = False   # set to True to skip fitting and load saved centres from .npy files
 SIGMA                 = 3.0     # Gaussian blur sigma for divergence map (in pixels)
@@ -162,6 +163,7 @@ def get_disk_edge(dp):
     return feature.canny(dp_closed.astype(float), sigma=1).astype(float)
 
 TEMPLATE_EDGE = np.mean([get_disk_edge(p) for p in _ref_patterns], axis=0)
+print(f"  Upsampling: {UPSAMPLE}")
 print(f"  Edge template built, mean edge density: {TEMPLATE_EDGE.mean():.4f}")
 
 _test_dp = datacube.data[Rx//2, Ry//2].astype(float)
@@ -179,7 +181,7 @@ def fit_single_pattern(dp_ij):
         dp_edge = get_disk_edge(dp_ij)
         shift, _, _ = phase_cross_correlation(
             TEMPLATE_EDGE, dp_edge,
-            upsample_factor=20
+            upsample_factor=UPSAMPLE
         )
         dy, dx = shift
         return -dx, -dy, np.nan, np.nan

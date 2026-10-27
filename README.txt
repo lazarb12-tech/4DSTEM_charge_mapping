@@ -1,14 +1,21 @@
 Quantitative 4D-STEM projected charge-density mapping
 
-Code accompanying the manuscript "Quantitative mapping of projected charge
-density at metal–support interfaces by robust, calibrated 4D-STEM".
+Code accompanying the manuscript "4D-STEM Mapping of Projected Charge Density
+at Supported Nanoparticle Interfaces" (Small Methods).
 
 The pipeline takes raw 4D-STEM data (Merlin .mib), converts it to the py4DSTEM
 .h5 format, tracks the bright-field disc across the scan to recover the beam
 deflection field, calibrates the scan–detector rotation and the camera length,
 and converts the divergence of the deflection field into a projected
-charge-density map in physical units (e nm⁻²). A separate script produces an
-independent-atom-model (IAM) reference simulation.
+charge-density map in physical units (e nm⁻²).
+
+Repository contents
+
+- Top folder: the analysis pipeline, i.e. everything needed to analyse your
+  own data (described below).
+- paper_reproduction/: the simulations and plotting scripts behind SI
+  Figures S2 and S4–S6 and Tables S3–S4, with pre-computed results (see
+  paper_reproduction/README.md). Not needed to analyse your own data.
 
 Installation
 
@@ -16,10 +23,11 @@ Requires Python 3.9+.
 
 pip install -r requirements.txt
 
-py4DSTEM, hyperspy, abtem and ase are large, domain-specific packages;
+py4DSTEM and hyperspy are large, domain-specific packages;
 if you only need part of the pipeline you can install a subset (see the
 per-script notes below). Installing into a fresh virtual environment or conda
-environment is recommended.
+environment is recommended. The scripts in paper_reproduction/ need abtem and
+ase instead (pip install -r paper_reproduction/requirements.txt).
 
 Project layout and the FOURDSTEM_ROOT path
 
@@ -93,14 +101,8 @@ Run the scripts in this order. Set FILE_STEM consistently across them.
    Set SKIP_FITTING = True to reload previously saved centres instead of
    refitting. PLANE_MODE = "measure" fits and saves the descan plane from a
    vacuum dataset; "apply" loads and applies it.
-   Needs: py4DSTEM, ase, scikit-image, joblib, tifffile, Pillow,
+   Needs: py4DSTEM, scikit-image, joblib, tifffile, Pillow,
    matplotlib-scalebar.
-
-5. abtem_simulation_Pt_graphene.py — IAM multislice reference simulation of
-   a Pt nanoparticle on graphene, analysed with the same tracking pipeline.
-   Self-contained (writes its outputs to the working directory). Set
-   QUICK_LOOK = True for a fast coarse run, False for a production map.
-   Needs: abtem, ase, scikit-image.
 
 Notes
 
@@ -108,3 +110,17 @@ Notes
   scripts sit in your project root.
 - The scripts are single-file, top-to-bottom analysis scripts (not an importable
   package): configure the SETTINGS block and run.
+
+
+Version 1.1 additions (see CHANGELOG.md)
+
+- tracker_qc_report.py — run first on a new dataset: measures how far the
+  diffraction contamination in the patterns moves each tracker and recommends
+  a tracker. Needs: py4DSTEM, joblib; uses disc_tracking.py.
+- compare_tracker_maps.py — after tracker_qc_report.py: charge maps of all
+  trackers through the same processing steps, with difference maps and radial
+  profiles.
+- CentreFitting_xcorr.py — new setting UPSAMPLE (20 = v1.0).
+- paper_reproduction/ — scripts and results for SI Figures S2 and S4–S6 and
+  Tables S3–S4 (see its README); abtem_simulation_Pt_graphene.py (Figure S2)
+  moved there from the top folder.

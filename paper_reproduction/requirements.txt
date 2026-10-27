@@ -1,0 +1,8 @@
+# Packages for the scripts in this folder (the analysis pipeline uses ../requirements.txt)
+numpy
+scipy
+matplotlib
+scikit-image
+joblib
+abtem             # multislice simulations (abtem_simulation_Pt_graphene.py, thickness_series.py)
+ase               # atomic models for the multislice simulations
